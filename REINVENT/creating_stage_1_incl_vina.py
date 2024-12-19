@@ -1,3 +1,4 @@
+#this program creates stage1.json config file that reinvent later uses to do reinforcement learning
 import os
 import shutil
 import subprocess
