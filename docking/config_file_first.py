@@ -18,7 +18,6 @@ for ligand_file in os.listdir(ligand_dir):
         ligand_name = os.path.splitext(ligand_file)[0]  # Remove extension
         config_file = os.path.join(output_dir, f"{ligand_name}.txt")
         output_file = os.path.join(output_dir, f"{os.path.splitext(ligand_file)[0]}_output.pdbqt")
-        log_file = os.path.join(output_dir, f"{os.path.splitext(ligand_file)[0]}_log.txt")
 
         # Create a config file for this ligand
         config_content = f"""
@@ -32,7 +31,6 @@ for ligand_file in os.listdir(ligand_dir):
         size_z = {size_z}
         energy_range = {energy_range}
         out = {output_file}
-        log = {log_file}
         """
         
         config_file = os.path.join(output_dir, f"{os.path.splitext(ligand_file)[0]}_config.txt")
