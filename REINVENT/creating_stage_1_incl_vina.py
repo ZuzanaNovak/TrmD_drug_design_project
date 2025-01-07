@@ -22,7 +22,7 @@ os.chdir(wd)
 # Global configuration parameters
 global_parameters = """
 run_type = "reinforcement_learning"
-device = "cpu"
+device = "gpu"
 tb_logdir = "tb_stage1"
 json_out_config = "_stage1.json"
 """
@@ -81,7 +81,7 @@ def dock_molecule(mol_file, receptor_file, vina_config):
 
 # Add Docking Scoring Component to REINVENT Configuration
 receptor_file = "path/to/receptor.pdbqt"
-vina_config = "path/to/vina_config.txt"
+vina_config = "/home/bio/test3/pocket.pdbqt" 
 
 stages = f"""
 [[stage]]
@@ -129,4 +129,4 @@ toml_config_filename = "stage1.toml"
 with open(toml_config_filename, "w") as tf:
     tf.write(config)
 
-print("Configuration file 'stage1.toml' generated successfully.")
+print("Configuration file 'stage_1_incl_vina.toml' generated successfully.")

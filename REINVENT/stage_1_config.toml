@@ -1,0 +1,64 @@
+run_type = "staged_learning"
+device = "cuda" # Use GPU; change to "cpu" if not available
+tb_logdir = "/home/bio/TrmD_drug_design_project/REINVENT/results/tb_stage1" # TensorBoard logging directory
+json_out_config = "/home/bio/TrmD_drug_design_project/REINVENT/results/_stage1.json" # JSON configuration output
+
+[parameters]
+prior_file = "/home/bio/Software/REINVENT4/priors/mol2mol_scaffold_generic.prior" # Path to Mol2Mol prior file
+agent_file = "/home/bio/Software/REINVENT4/priors/mol2mol_scaffold_generic.prior" # Path to Mol2Mol agent file
+smiles_file = "/home/bio/TrmD_drug_design_project/REINVENT/data/mol2mol.smi"
+
+summary_csv_prefix = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1" # CSV file prefix for results
+batch_size = 100 # Batch size for Mol2Mol
+use_checkpoint = false # Do not use checkpoints for this run
+
+randomize_smiles = true # Shuffle atoms in SMILES randomly
+sample_strategy = "multinomial" # Strategy for sampling (alternatively, "beamsearch")
+distance_threshold = 100 # Threshold for distance-based sampling
+
+[learning_strategy]
+type = "dap" # DAP learning strategy
+sigma = 128 # Sigma of the RL reward function
+rate = 0.0001 # Learning rate for the optimizer
+
+[diversity_filter]
+type = "IdenticalMurckoScaffold" # Filter type to ensure diversity
+bucket_size = 25 # Memory size in the number of compounds
+minscore = 0.4 # Only memorize if this threshold is exceeded
+minsimilarity = 0.4 # Minimum similarity for ScaffoldSimilarity
+penalty_multiplier = 0.5 # Penalty factor for PenalizeSameSmiles
+
+[[stage]]
+chkpt_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1.chkpt" # Checkpoint file for the stage
+termination = "simple" # Termination criterion
+max_score = 0.6 # Terminate if the total score exceeds this value
+min_steps = 25 # Run for at least this number of steps
+max_steps = 100 # Terminate if this number of steps is exceeded
+
+[stage.scoring]
+type = "geometric_mean" # Aggregation function for scoring
+
+[[stage.scoring.component]]
+[stage.scoring.component.custom_alerts]
+[[stage.scoring.component.custom_alerts.endpoint]]
+name = "Unwanted SMARTS" # Name for the output
+weight = 0.8 # Weight for this component
+params.smarts = [
+  "[*;r8]",
+  "[*;r9]",
+  "[*;r10]",
+  "[#8][#8]",
+  "[#16][#16]"
+]
+
+[[stage.scoring.component]]
+[stage.scoring.component.MolecularWeight]
+[[stage.scoring.component.MolecularWeight.endpoint]]
+name = "Molecular weight" # User-chosen name
+weight = 0.2 # Weight for molecular weight scoring
+transform.type = "double_sigmoid" # Transform type
+transform.high = 500.0
+transform.low = 200.0
+transform.coef_div = 500.0
+transform.coef_si = 20.0
+transform.coef_se = 20.0
