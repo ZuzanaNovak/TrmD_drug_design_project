@@ -9,7 +9,7 @@ agent_file = "/home/bio/Software/REINVENT4/priors/mol2mol_scaffold_generic.prior
 smiles_file = "/home/bio/TrmD_drug_design_project/REINVENT/data/mol2mol.smi"
 
 summary_csv_prefix = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1" # CSV file prefix for results
-batch_size = 100 # Batch size for Mol2Mol
+batch_size = 50 # Batch size for Mol2Mol
 use_checkpoint = false # Do not use checkpoints for this run
 
 randomize_smiles = true # Shuffle atoms in SMILES randomly
