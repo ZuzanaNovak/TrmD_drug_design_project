@@ -1,14 +1,14 @@
 run_type = "staged_learning"
 device = "cuda" # Use GPU; change to "cpu" if not available
-tb_logdir = "/home/bio/TrmD_drug_design_project/REINVENT/results/tb_stage1" # TensorBoard logging directory
-json_out_config = "/home/bio/TrmD_drug_design_project/REINVENT/results/_stage1.json" # JSON configuration output
+tb_logdir = "/home/bio/TrmD_drug_design_project/REINVENT/results/tb_stage1_v2" # TensorBoard logging directory
+json_out_config = "/home/bio/TrmD_drug_design_project/REINVENT/results/_stage1_v2.json" # JSON configuration output
 
 [parameters]
 prior_file = "/home/bio/Software/REINVENT4/priors/mol2mol_scaffold_generic.prior" # Path to Mol2Mol prior file
 agent_file = "/home/bio/Software/REINVENT4/priors/mol2mol_scaffold_generic.prior" # Path to Mol2Mol agent file
 smiles_file = "/home/bio/TrmD_drug_design_project/REINVENT/data/mol2mol.smi"
 
-summary_csv_prefix = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1" # CSV file prefix for results
+summary_csv_prefix = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1_v2" # CSV file prefix for results
 batch_size = 50 # Batch size for Mol2Mol
 use_checkpoint = false # Do not use checkpoints for this run
 
@@ -29,7 +29,7 @@ minsimilarity = 0.4 # Minimum similarity for ScaffoldSimilarity
 penalty_multiplier = 0.5 # Penalty factor for PenalizeSameSmiles
 
 [[stage]]
-chkpt_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1.chkpt" # Checkpoint file for the stage
+chkpt_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1_v2.chkpt" # Checkpoint file for the stage
 termination = "simple" # Termination criterion
 max_score = 0.6 # Terminate if the total score exceeds this value
 min_steps = 25 # Run for at least this number of steps

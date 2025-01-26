@@ -1,16 +1,16 @@
 run_type = "staged_learning"
 device = "cuda" # Use GPU; change to "cpu" if not available
-tb_logdir = "/home/bio/TrmD_drug_design_project/REINVENT/results/tb_stage2" # TensorBoard logging directory
-json_out_config = "/home/bio/TrmD_drug_design_project/REINVENT/results/_stage2.json" # JSON configuration output
+tb_logdir = "/home/bio/TrmD_drug_design_project/REINVENT/results/tb_stage2_v2" # TensorBoard logging directory
+json_out_config = "/home/bio/TrmD_drug_design_project/REINVENT/results/_stage2_v2.json" # JSON configuration output
 
 [parameters]
 prior_file = "/home/bio/Software/REINVENT4/priors/mol2mol_scaffold_generic.prior" # Path to Mol2Mol prior file
-agent_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1.chkpt" # Continue from Stage 1 checkpoint
+agent_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage1_v2.chkpt" # Continue from Stage 1 checkpoint
 smiles_file = "/home/bio/TrmD_drug_design_project/REINVENT/data/mol2mol.smi"
 
 
-summary_csv_prefix = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage2" # CSV file prefix for results
-batch_size = 50 # Batch size for Mol2Mol
+summary_csv_prefix = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage2_v2" # CSV file prefix for results
+batch_size = 30 # Batch size for Mol2Mol
 use_checkpoint = true # Enable checkpoint usage to continue from Stage 1
 
 randomize_smiles = true # Shuffle atoms in SMILES randomly
@@ -30,11 +30,11 @@ minsimilarity = 0.4 # Minimum similarity for ScaffoldSimilarity
 penalty_multiplier = 0.5 # Penalty factor for PenalizeSameSmiles
 
 [[stage]]
-chkpt_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage2.chkpt" # Checkpoint file for Stage 2
+chkpt_file = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage2_v2.chkpt" # Checkpoint file for Stage 2
 termination = "simple" # Termination criterion
-max_score = 0.7 # Terminate if the total score exceeds this value
-min_steps = 25 # Run for at least this number of steps
-max_steps = 100 # Terminate if this number of steps is exceeded
+max_score = 0.8 # Terminate if the total score exceeds this value
+min_steps = 15 # Run for at least this number of steps
+max_steps = 50 # Terminate if this number of steps is exceeded
 
 [stage.scoring]
 type = "geometric_mean" # Aggregation function for scoring

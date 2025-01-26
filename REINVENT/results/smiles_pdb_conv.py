@@ -2,8 +2,8 @@ import pandas as pd
 import os
 
 # Path to your CSV file
-input_csv = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage2_1.csv"  # Replace with your CSV file path
-output_dir = "reinvent1_output_pdbqt"  # Directory to save PDBQT files
+input_csv = "/home/bio/TrmD_drug_design_project/REINVENT/results/stage2_v2_1.csv"  # Replace with your CSV file path
+output_dir = "reinvent1_output_pdbqt_v2"  # Directory to save PDBQT files
 os.makedirs(output_dir, exist_ok=True)  # Create the output directory if it doesn't exist
 
 # Read the CSV file with proper delimiter and encoding
