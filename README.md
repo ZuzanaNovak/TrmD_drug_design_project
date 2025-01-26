@@ -80,8 +80,6 @@ This project follows a stepwise approach to identify potential TrmD inhibitors b
 ## Collaborators
 [Ladislav Buček](https://github.com/bucekla)
 
-
 [Zuzana Nováková](https://github.com/ZuzanaNovak)
-
 
 [Věra Tereza Štěpánková](https://github.com/stepankverat)
