@@ -4,32 +4,62 @@ This project aims to identify potential inhibitors of TrmD (tRNA (m1G37) methylt
 
 ## Methodology
 
-The project is divided into two main phases:
 
-**Phase 1: Ligand Generation using REINVENT 4**
+This project follows a stepwise approach to identify potential TrmD inhibitors by combining reinforcement learning-based molecule generation, docking simulations, and ADMET analysis.
 
-* **Data Collection:** Known TrmD-associated ligands are retrieved from the ChEMBL database.
-* **REINVENT 4 Pipeline:**  A two-stage process within REINVENT 4 (Mol2Mol mode) is utilized:
-    * **Stage 1 (Exploration):** Focuses on generating diverse molecules with general drug-like properties using a scaffold-based prior and multinomial sampling.  Custom alerts and molecular weight optimization guide the generation process.
-    * **Stage 2 (Refinement):** Refines the generated molecules by prioritizing those meeting stricter drug-like criteria while maintaining structural diversity. Uses the output of Stage 1 as input.
+---
 
-**Phase 2: Docking Simulation and ADMET Analysis**
+### **1. Initial Docking**
+- **Objective:** Screen known TrmD-associated ligands to identify suitable candidates for further optimization.  
+- **Methodology:**  
+  - Docking was performed using AutoDock Vina on 69 ligands from the ChEMBL database.
+  - The AdoMet binding pocket of TrmD (structure 4YVG) was used, prepared using AutoDock Tools.
+  - Docking results were filtered to select ligands with binding scores ≤ -8 kcal/mol.
 
-* **Initial Docking (Screening):** AutoDock Vina is used for initial screening of the generated ligands against the TrmD binding pocket (identified using P2Rank on the 4YVG structure from *Haemophilus influenzae*). A moderate exhaustiveness parameter is used for faster processing.
-* **Final Docking (Refinement):** Top-scoring molecules from the initial docking are re-docked with a higher exhaustiveness parameter for more accurate binding pose prediction.
-* **ADMET Analysis:**  The top-ranked molecules undergo ADMET (Absorption, Distribution, Metabolism, Excretion, and Toxicity) analysis using RDKit, ADMET-AI, admetSAR, and SwissADME to assess their drug-like properties and potential risks.
+---
+
+### **2. Ligand Generation using REINVENT 4**
+- **Objective:** Generate and optimize novel molecules based on scaffolds from the initial docking results.  
+- **Pipeline:**  
+  - **Input:** Selected molecules with good docking scores from the initial docking step.
+  - **Stage 1 (Exploration):**
+    - Focused on generating diverse molecules using the `mol2mol_scaffold_generic` prior.
+    - Employed scoring strategies to optimize molecular weight (200–500 Daltons) and penalize undesirable features.
+    - Diversity filters ensured structural novelty.
+  - **Stage 2 (Refinement):**
+    - Refined molecules from Stage 1, enforcing stricter drug-likeness criteria.
+    - Smaller batch sizes and updated diversity filters were used for focused optimization.
+  - **Output:** Final library of optimized molecules ready for further docking.
+
+---
+
+### **3. Docking of Generated Molecules**
+- **Objective:** Evaluate the binding affinities of REINVENT-generated molecules to TrmD.  
+- **Methodology:**  
+  - **Initial Screening:**  
+    - Docking was performed using AutoDock Vina with moderate exhaustiveness (8).
+    - Top 500 molecules (binding scores ≤ -9.052 kcal/mol) were shortlisted.
+  - **Refined Docking:**  
+    - Shortlisted molecules were re-docked with higher exhaustiveness (32) to refine binding poses.
+    - Binding poses were visually inspected to confirm key interactions with active site residues.
+
+---
+
+### **4. ADMET Analysis**
+- **Objective:** Assess the pharmacokinetic and safety profiles of the top-ranked ligands.  
+- **Tools Used:**  
+  - RDKit for calculating basic drug-like properties (e.g., molecular weight, LogP, TPSA).  
+  - ADMET-AI, admetSAR, and SwissADME for toxicity predictions (e.g., AMES test, hERG inhibition, hepatotoxicity).  
+- **Outcome:**  
+  - Molecule 3664 emerged as the top candidate with a strong balance of binding affinity and drug-like properties.
+  - Despite favorable ADMET predictions, hepatotoxicity risks were identified, requiring further investigation.
 
 ## Results
 
 * **Ligand Generation:** The REINVENT 4 pipeline generated a diverse library of molecules with optimized properties.
 * **Docking:**  Several ligands exhibited strong binding affinities to TrmD, indicating potential inhibitory activity.
-* **Lead Candidate:** Ligand 3664 emerged as a promising candidate due to its balanced profile of binding affinity, ADMET properties, and structural similarity to a known TrmD inhibitor. However, predicted hepatotoxicity requires further investigation.
+* **Lead Candidate:** Ligand 3664 emerged as a promising candidate due to its balanced profile of binding affinity, ADMET properties, and structural similarity to a known TrmD inhibitor. However, predicted hepatotoxicity would require further investigation.
 
-
-## Key Files
-
-* **report.pdf:**  Detailed project report including methodology, results, and discussion.
-*  **(Add other relevant files here, e.g., input files for REINVENT 4, docking configuration files, output files containing generated ligands, etc.)**
 
 ## Dependencies
 
@@ -39,13 +69,7 @@ The project is divided into two main phases:
 * ADMET-AI
 * admetSAR
 * SwissADME
-* (Add any other dependencies here)
-
-
-## Usage
-
-**(Provide instructions on how to reproduce the results, if applicable)**
-
+* Open Babel
 
 ## Limitations
 
@@ -54,3 +78,6 @@ The project is divided into two main phases:
 
 
 ## Collaborators
+[Ladislav Buček](https://github.com/bucekla)
+[Zuzana Nováková](https://github.com/ZuzanaNovak)
+[Věra Tereza Štěpánková](https://github.com/stepankverat))
